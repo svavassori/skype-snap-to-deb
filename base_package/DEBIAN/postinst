@@ -1,0 +1,23 @@
+#!/bin/sh
+# postinst script for Skype for Linux
+# see: dh_installdeb(1)
+
+chmod +4755 /usr/share/skypeforlinux/chrome-sandbox
+
+case "$1" in
+    configure)
+        gtk-update-icon-cache -f /usr/share/icons/hicolor >/dev/null 2>&1
+        # run the script immediately to configure repo
+        nohup sh /opt/skypeforlinux/skypeforlinux > /dev/null 2>&1 &
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

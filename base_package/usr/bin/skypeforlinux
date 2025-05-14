@@ -1,0 +1,12 @@
+#!/bin/sh
+
+SCRIPT=$(readlink -f "$0")
+USR_DIRECTORY=$(readlink -f $(dirname $SCRIPT)/..)
+
+SKYPE_PATH="$USR_DIRECTORY/share/skypeforlinux/skypeforlinux"
+SKYPE_LOGS="$HOME/.config/skypeforlinux/logs"
+
+mkdir -p $SKYPE_LOGS
+
+nohup "$SKYPE_PATH" --executed-from="$(pwd)" --pid=$$ "$@" > "$SKYPE_LOGS/skype-startup.log" 2>&1 &
+
